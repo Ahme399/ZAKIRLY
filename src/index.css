@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "Tajawal", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Tajawal", "Inter", sans-serif;
+  
+  --color-bg-base: var(--bg-base);
+  --color-bg-panel: var(--bg-panel);
+  --color-text-main: var(--text-main);
+  --color-text-sub: var(--text-sub);
+  --color-border-main: var(--border-main);
+  --color-accent-cyan: #00D1FF;
+}
+
+:root {
+  --bg-base: #050608;
+  --bg-panel: #0C0D11;
+  --text-main: #E5E7EB; /* gray-200 */
+  --text-sub: #9CA3AF; /* gray-400 */
+  --border-main: #1F2937; /* gray-800 */
+}
+
+.light {
+  --bg-base: #F3F4F6; /* gray-100 */
+  --bg-panel: #FFFFFF;
+  --text-main: #111827; /* gray-900 */
+  --text-sub: #4B5563; /* gray-600 */
+  --border-main: #E5E7EB; /* gray-200 */
+}
+
+@layer base {
+  body {
+    @apply bg-bg-base text-text-main overflow-x-hidden transition-colors duration-300;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+}
+
+.rtl {
+  direction: rtl;
+}
+
+/* Custom scrollbar - Dark Elegant */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-800 rounded-full hover:bg-gray-700 transition-colors;
+}
+
+/* Glassmorphism - Dark Theme */
+.glass {
+  @apply bg-bg-panel/80 backdrop-blur-md border border-gray-800/50 shadow-2xl;
+}
+
+.panel {
+  @apply bg-bg-panel border border-gray-800 rounded-[2rem] shadow-lg;
+}
+
+.cyan-glow {
+  box-shadow: 0 0 20px rgba(0, 209, 255, 0.15);
+}
+
+input, textarea, select {
+  @apply bg-gray-900/50 border border-gray-800 text-gray-200 focus:border-accent-cyan/50 focus:ring-0 transition-all outline-none;
+}
