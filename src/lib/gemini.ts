@@ -1,9 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 
 // Initialization for @google/genai SDK
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const apiKey = process.env.GEMINI_API_KEY || "";
+const ai = new GoogleGenAI({ apiKey });
 
-// Using Gemini 3 series models as per guidelines
+// Using Gemini 3 Flash for optimal performance in this environment
 export const chatModel = "gemini-3-flash-preview"; 
 
 const handleGeminiError = (error: any) => {

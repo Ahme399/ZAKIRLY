@@ -12,6 +12,14 @@ export default function ResourceLinks() {
       accent: 'bg-blue-500'
     },
     {
+      title: 'بسطتهالك',
+      desc: 'شروحات مبسطة واحترافية لكل المواد الدراسية، رفيقك الأول في الدراسة والنجاح.',
+      link: 'https://bassthalk.com/',
+      icon: Tv,
+      color: 'from-rose-600/10 to-rose-400/5',
+      accent: 'bg-rose-500'
+    },
+    {
       title: 'الكتب والمناهج',
       desc: 'تحميل جميع الكتب الدراسية والملحقات لكل الصفوف والمواد.',
       link: 'https://ellibrary.moe.gov.eg/books/',

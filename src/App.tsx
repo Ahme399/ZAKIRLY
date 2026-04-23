@@ -27,7 +27,6 @@ import {
   Sun,
   Moon,
   Trophy,
-  Globe,
   Map
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -46,7 +45,6 @@ import FaithTools from './components/FaithTools';
 import SchoolDirectory from './components/SchoolDirectory';
 import ExamHub from './components/ExamHub';
 import SchoolTimetable from './components/SchoolTimetable';
-import PlatformsHub from './components/PlatformsHub';
 import WorldMap from './components/WorldMap';
 
 export default function App() {
@@ -85,7 +83,6 @@ export default function App() {
 
   const navItems = [
     { id: 'dashboard', label: 'الرئيسية', icon: Home },
-    { id: 'platforms', label: 'المنصات التعليمية', icon: Globe },
     { id: 'map', label: 'خريطة العالم', icon: Map },
     { id: 'timetable', label: 'الجدول المدرسي', icon: Calendar },
     { id: 'ai', label: 'المساعد الذكي', icon: BrainCircuit },
@@ -242,7 +239,6 @@ export default function App() {
               className="min-h-0"
             >
               {activeTab === 'dashboard' && <Dashboard setActiveTab={setActiveTab} profile={profile} />}
-              {activeTab === 'platforms' && <PlatformsHub profile={profile} />}
               {activeTab === 'map' && <WorldMap />}
               {activeTab === 'timetable' && <SchoolTimetable />}
               {activeTab === 'ai' && <AIAssistant stage={profile.stage} language={profile.language} />}

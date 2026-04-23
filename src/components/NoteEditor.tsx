@@ -37,7 +37,11 @@ export default function NoteEditor() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('zakirly_notes', JSON.stringify(notes));
+    try {
+      localStorage.setItem('zakirly_notes', JSON.stringify(notes));
+    } catch (e) {
+      console.error("Failed to save notes to storage:", e);
+    }
   }, [notes]);
 
   const addNote = () => {

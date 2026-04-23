@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Lightbulb, ArrowRight, BrainCircuit, CheckSquare, Calendar, Sparkles, Trophy, Heart, School, ExternalLink, Timer, Target, AlertCircle, HelpCircle, BookOpen, Globe, Map, PlayCircle } from 'lucide-react';
+import { Lightbulb, ArrowRight, BrainCircuit, CheckSquare, Calendar, Sparkles, Trophy, Heart, School, ExternalLink, Timer, Target, AlertCircle, HelpCircle, BookOpen, Map, PlayCircle, Tv } from 'lucide-react';
 import { motion } from 'motion/react';
 import { getStudyAdvice } from '../lib/gemini';
 
@@ -96,7 +96,7 @@ export default function Dashboard({ setActiveTab, profile }: { setActiveTab: (ta
       {/* Quick Navigation Bar */}
       <div className="sticky top-0 z-30 -mx-4 px-4 py-3 bg-bg-base/80 backdrop-blur-xl border-b border-border-main/50 flex gap-3 overflow-x-auto no-scrollbar transition-colors">
         {[
-          { id: 'platforms-preview', label: 'المنصات التعليمية', icon: Globe, color: 'text-purple-400' },
+          { id: 'bassthalk-preview', label: 'منصة بسطتهالك', icon: Tv, color: 'text-rose-400' },
           { id: 'map-preview', label: 'خريطة العالم', icon: Map, color: 'text-indigo-400' },
           { id: 'ministry-hub', label: 'روابط الوزارة', icon: ExternalLink, color: 'text-blue-400' },
           { id: 'exams-preview', label: 'الامتحانات', icon: Trophy, color: 'text-amber-400' },
@@ -171,33 +171,35 @@ export default function Dashboard({ setActiveTab, profile }: { setActiveTab: (ta
 
       {/* Single Page Sections - Scrollable Previews */}
       <div className="space-y-24">
-        {/* Platforms Hub Preview */}
-        <section id="platforms-preview" className="scroll-mt-20">
+        {/* Bassthalk Resource Section */}
+        <section id="bassthalk-preview" className="scroll-mt-20">
            <div className="flex items-center justify-between mb-8">
               <h2 className="text-2xl font-black text-text-main flex items-center gap-3">
-                 <div className="w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-xl flex items-center justify-center text-purple-400">
-                    <Globe size={20} />
+                 <div className="w-10 h-10 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-center justify-center text-rose-400">
+                    <Tv size={20} />
                  </div>
-                 المنصات التعليمية الموصى بها ⭐
+                 منصة بسطتهالك التعليمية 🏫
               </h2>
            </div>
            
            <div className="bg-bg-panel border border-border-main p-8 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-3xl rounded-full pointer-events-none"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/5 blur-3xl rounded-full pointer-events-none"></div>
               <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10 text-center md:text-right">
                  <div className="flex-1">
-                    <h3 className="text-xl font-black text-text-main mb-3">ترشيحات خاصة بنظام {profile.language === 'arabic' ? 'العربي' : 'اللغات'}</h3>
+                    <h3 className="text-xl font-black text-text-main mb-3">كل اللي محتاجه في مكان واحد</h3>
                     <p className="text-text-sub font-bold text-sm leading-relaxed max-w-xl">
-                       جمعنا لك أفضل المدرسين والمنصات التعليمية اللي هتحتاجها في {profile.stage} بناءً على نظام دراستك.
+                       منصة بسطتهالك هي رفيقك الأول في الدراسة، بنقدملك شروحات مبسطة واحترافية لكل موادك الدراسية.
                     </p>
                  </div>
-                 <button 
-                  onClick={() => setActiveTab('platforms')}
-                  className="px-10 py-5 bg-purple-500 text-white font-black rounded-2xl shadow-xl shadow-purple-500/20 hover:bg-purple-400 hover:scale-105 transition-all flex items-center gap-4"
+                 <a 
+                  href="https://bassthalk.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-10 py-5 bg-rose-500 text-white font-black rounded-2xl shadow-xl shadow-rose-500/20 hover:bg-rose-400 hover:scale-105 transition-all flex items-center gap-4"
                  >
-                    استعراض المنصات
+                    دخول المنصة الآن
                     <ArrowRight size={20} className="rotate-180" />
-                 </button>
+                 </a>
               </div>
            </div>
         </section>
