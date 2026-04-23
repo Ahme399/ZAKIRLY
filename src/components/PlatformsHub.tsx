@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExternalLink, PlayCircle, Star, User, Globe, ArrowRight } from 'lucide-react';
+import { Globe, User, ArrowRight, BookOpen } from 'lucide-react';
 import { motion } from 'motion/react';
 import { UserProfile } from '../types';
 
@@ -8,14 +8,13 @@ interface Platform {
   subject: string;
   type: 'arabic' | 'languages';
   url: string;
-  image?: string;
 }
 
 const PLATFORMS: Platform[] = [
   { name: 'محمد صلاح', subject: 'لغة عربية', type: 'arabic', url: 'https://bastalak.com' },
   { name: 'محمد العميد', subject: 'لغة عربية', type: 'arabic', url: 'https://elameededu.com' },
   { name: 'Kareem Tammam', subject: 'Math', type: 'languages', url: 'https://mrkarimtammam.com' },
-  { name: 'أحمد فؤاد', subject: 'رياضة', type: 'arabic', url: 'https://arabmaths.com' },
+  { name: 'كيرلس وليم', subject: 'Math', type: 'languages', url: 'https://mrkirolloswilliam.com' },
   { name: 'إبراهيم عادل', subject: 'English', type: 'languages', url: 'https://zamericanenglish.net' },
   { name: 'أحمد عادل', subject: 'English', type: 'arabic', url: 'https://engwithahmedadel.com' },
   { name: 'أحمد مجدي', subject: 'فيزياء', type: 'arabic', url: 'https://physicsacademyedu.com' },
@@ -27,10 +26,8 @@ const PLATFORMS: Platform[] = [
 ];
 
 export default function PlatformsHub({ profile }: { profile: UserProfile }) {
-  const [filter, setFilter] = useState<'my' | 'all'>('my');
-  const filteredPlatforms = filter === 'my' 
-    ? PLATFORMS.filter(p => p.type === profile.language)
-    : PLATFORMS;
+  // Directly show all platforms as requested
+  const filteredPlatforms = PLATFORMS;
 
   return (
     <div className="space-y-10 pb-20">
@@ -39,43 +36,31 @@ export default function PlatformsHub({ profile }: { profile: UserProfile }) {
          <div className="relative z-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-900 border border-gray-800 rounded-full text-[10px] font-black text-[#00D1FF] uppercase tracking-widest mb-4">
               <Globe size={12} />
-              Educational Platforms
+              Educational Platforms Hub
             </div>
-            <h1 className="text-4xl font-black text-white leading-tight mb-2">منصات <span className="text-[#00D1FF]">المدرسين</span></h1>
+            <h1 className="text-4xl font-black text-white leading-tight mb-2">المنصات التعليمية <span className="text-[#00D1FF]">الشاملة</span></h1>
             <p className="text-gray-400 font-medium max-w-lg leading-relaxed">
-               أفضل المدرسين المصريين لمنهجك الدراسي ({profile.language === 'arabic' ? 'نظام عربي' : 'نظام لغات'}).
+               جمعنا لك أفضل المدرسين والمنصات التعليمية المتاحة لجميع الأنظمة (عربي ولغات) في صفحة واحدة.
             </p>
          </div>
          
          <div className="relative z-10 flex flex-col gap-4">
-            <div className="flex bg-gray-950 p-1.5 rounded-2xl border border-gray-800 shadow-inner">
-               <button 
-                onClick={() => setFilter('my')}
-                className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all ${filter === 'my' ? 'bg-[#00D1FF] text-black shadow-lg shadow-cyan-500/20' : 'text-gray-500 hover:text-white'}`}
-               >
-                  نظامي فقط
-               </button>
-               <button 
-                onClick={() => setFilter('all')}
-                className={`px-6 py-2.5 rounded-xl text-xs font-black transition-all ${filter === 'all' ? 'bg-[#00D1FF] text-black shadow-lg shadow-cyan-500/20' : 'text-gray-500 hover:text-white'}`}
-               >
-                  عرض الكل
-               </button>
-            </div>
-            
             <div className="flex items-center gap-4 bg-gray-900 shadow-inner p-4 rounded-3xl border border-gray-800 transition-colors">
                <div className={`p-4 rounded-2xl ${profile.language === 'arabic' ? 'bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]' : 'bg-[#00D1FF]/10 text-[#00D1FF] shadow-[0_0_20px_rgba(0,209,255,0.2)]'}`}>
                   <User size={32} />
                </div>
                <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-gray-500 leading-none mb-1">نظامك الحالي</p>
-                  <p className="text-xl font-black text-white">{profile.language === 'arabic' ? 'عربي' : 'لغات'}</p>
+                  <h4 className="font-black text-text-main text-sm">بروفايل {profile.name.split(' ')[0]}</h4>
+                  <p className="text-[10px] text-text-sub flex items-center gap-1.5 font-bold animate-pulse">
+                    <span className="w-1.5 h-1.5 bg-green-500 rounded-full"></span>
+                    نظام {profile.language === 'arabic' ? 'العربي' : 'اللغات'}
+                  </p>
                </div>
             </div>
          </div>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredPlatforms.map((platform, i) => (
           <motion.a
             key={i}
@@ -85,40 +70,36 @@ export default function PlatformsHub({ profile }: { profile: UserProfile }) {
             whileHover={{ y: -8, scale: 1.02 }}
             className="group bg-[#0C0D11] border border-gray-800 p-8 rounded-[2.5rem] shadow-xl relative overflow-hidden flex flex-col justify-between h-full transition-all"
           >
-             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2"></div>
+             <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 blur-3xl rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
              
              <div>
                 <div className="flex items-center justify-between mb-8">
-                   <div className="w-14 h-14 bg-gray-950 border border-gray-800 rounded-2xl flex items-center justify-center text-[#00D1FF] group-hover:scale-110 transition-transform shadow-inner">
-                      <PlayCircle size={28} />
+                   <div className="w-14 h-14 rounded-2xl bg-gray-900 border border-gray-800 flex items-center justify-center text-[#00D1FF] shadow-inner group-hover:rotate-12 transition-transform">
+                      <Globe size={28} />
                    </div>
-                   <div className="flex bg-gray-900 border border-gray-800 p-2 rounded-xl text-amber-500 shadow-inner">
-                      <Star size={14} fill="currentColor" />
+                   <div className="flex flex-col items-end">
+                      <span className="text-[10px] font-black text-[#00D1FF] uppercase tracking-widest">{platform.subject}</span>
+                      <span className={`px-3 py-1 rounded-full text-[9px] font-black mt-2 ${
+                        platform.type === 'arabic' ? 'bg-blue-500/10 text-blue-400' : 'bg-purple-500/10 text-purple-400'
+                      }`}>
+                        {platform.type === 'arabic' ? 'نظام عربي' : 'نظام لغات'}
+                      </span>
                    </div>
                 </div>
-                
-                <h3 className="text-2xl font-black text-white mb-2 group-hover:text-[#00D1FF] transition-colors">{platform.name}</h3>
-                <p className="text-gray-400 font-bold text-sm tracking-wide mb-6">{platform.subject} <span className="mx-2 opacity-20">|</span> {platform.type === 'arabic' ? 'عربي' : 'لغات'}</p>
+                <h3 className="text-2xl font-black text-white mb-2 leading-tight group-hover:text-[#00D1FF] transition-colors">{platform.name}</h3>
+                <p className="text-gray-400 text-sm font-bold leading-relaxed mb-6">
+                   أقوى شرح لـ {platform.subject} متاح الآن على منصة {platform.name}. اتبع الرابط للبدء.
+                </p>
              </div>
 
-             <div className="flex items-center justify-between pt-6 border-t border-gray-800 mt-auto">
-                <span className="text-[10px] font-black uppercase tracking-widest text-[#00D1FF] group-hover:underline">زيارة المنصة الآن</span>
-                <div className="p-2 bg-gray-900 border border-gray-800 rounded-xl text-gray-500 group-hover:text-white transition-colors">
-                   <ExternalLink size={18} />
+             <div className="flex items-center justify-between pt-6 border-t border-gray-900">
+                <span className="text-[11px] font-black text-gray-500 uppercase tracking-[0.2em] group-hover:text-[#00D1FF] transition-colors">زيارة المنصة</span>
+                <div className="p-3 bg-gray-900 border border-gray-800 rounded-xl text-gray-400 group-hover:bg-[#00D1FF] group-hover:text-black group-hover:border-[#00D1FF] transition-all">
+                   <ArrowRight size={20} className="rotate-180" />
                 </div>
              </div>
           </motion.a>
         ))}
-      </div>
-
-      <div className="bg-bg-panel/50 border border-border-main p-8 rounded-[2.5rem] text-center shadow-inner mt-10">
-         <p className="text-text-sub font-bold leading-relaxed mb-6">
-            تعرف مدرس شاطر تاني وعايز تضيفه؟ تواصل معنا لتحديث قائمة المدرسين الأفضل لك!
-         </p>
-         <button className="px-10 py-4 bg-gray-900 border border-gray-800 text-[#00D1FF] font-black rounded-2xl flex items-center gap-3 mx-auto hover:bg-[#0C0D11] transition-all group">
-            اقتراح مدرس جديد
-            <ArrowRight size={18} className="rotate-180 group-hover:translate-x-1 transition-transform" />
-         </button>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@ export default function ResourceLinks() {
     },
     {
       title: 'فيديوهات الشرح',
-      desc: 'قناة المنصات التعليمية الرسمية لمشاهدة شرح الدروس بالفيديو.',
+      desc: 'قناة المنصات التعليمية الرسمية لمشاهدة شرح الدروس بالفيديو، تشمل جميع المراحل من الابتدائي للثانوي.',
       link: 'https://ellibrary.moe.gov.eg/video/',
       icon: PlayCircle,
       color: 'from-[#00D1FF]/10 to-cyan-500/5',
@@ -57,7 +57,7 @@ export default function ResourceLinks() {
             whileHover={{ y: -8, scale: 1.02 }}
             className={`flex flex-col p-8 rounded-[2rem] bg-[#0C0D11] border border-gray-800 shadow-xl transition-all group relative overflow-hidden`}
           >
-             <div className={`absolute inset-0 bg-gradient-to-tr ${res.color} opacity-40`}></div>
+             <div className={`absolute inset-0 bg-gradient-to-tr ${res.color} opacity-40 pointer-events-none`}></div>
              <div className={`w-16 h-16 rounded-[1.5rem] bg-gray-900 border border-gray-800 flex items-center justify-center mb-6 shadow-inner ${res.accent.replace('bg-', 'text-')} group-hover:cyan-glow transition-all`}>
                <res.icon size={32} />
              </div>

@@ -23,7 +23,7 @@ const COLORS = [
 
 export default function StudySchedule() {
   const [items, setItems] = useState<ScheduleItem[]>(() => {
-    const saved = localStorage.getItem('zakery_schedule');
+    const saved = localStorage.getItem('zakirly_schedule');
     return saved ? JSON.parse(saved) : [];
   });
   const [showAdd, setShowAdd] = useState(false);
@@ -36,7 +36,7 @@ export default function StudySchedule() {
   });
 
   useEffect(() => {
-    localStorage.setItem('zakery_schedule', JSON.stringify(items));
+    localStorage.setItem('zakirly_schedule', JSON.stringify(items));
   }, [items]);
 
   const addItem = () => {

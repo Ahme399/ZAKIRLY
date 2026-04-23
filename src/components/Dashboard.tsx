@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Lightbulb, ArrowRight, BrainCircuit, CheckSquare, Calendar, Sparkles, Trophy, Heart, School, ExternalLink, Timer, Target, AlertCircle, HelpCircle, BookOpen, Globe, Map } from 'lucide-react';
+import { Lightbulb, ArrowRight, BrainCircuit, CheckSquare, Calendar, Sparkles, Trophy, Heart, School, ExternalLink, Timer, Target, AlertCircle, HelpCircle, BookOpen, Globe, Map, PlayCircle } from 'lucide-react';
 import { motion } from 'motion/react';
 import { getStudyAdvice } from '../lib/gemini';
 
@@ -183,7 +183,7 @@ export default function Dashboard({ setActiveTab, profile }: { setActiveTab: (ta
            </div>
            
            <div className="bg-bg-panel border border-border-main p-8 rounded-[2.5rem] relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-3xl rounded-full"></div>
+              <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 blur-3xl rounded-full pointer-events-none"></div>
               <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10 text-center md:text-right">
                  <div className="flex-1">
                     <h3 className="text-xl font-black text-text-main mb-3">ترشيحات خاصة بنظام {profile.language === 'arabic' ? 'العربي' : 'اللغات'}</h3>
@@ -215,7 +215,7 @@ export default function Dashboard({ setActiveTab, profile }: { setActiveTab: (ta
            
            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-bg-panel border border-border-main p-8 rounded-[2.5rem] relative overflow-hidden group">
-                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full"></div>
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 blur-3xl rounded-full pointer-events-none"></div>
                  <h3 className="text-xl font-black text-text-main mb-3 relative z-10">اكتشف العالم</h3>
                  <p className="text-text-sub font-bold text-sm leading-relaxed mb-6 relative z-10">
                     خرائط تفاعلية وسياسية لدعم منهج الدراسات الاجتماعية والجغرافيا.
@@ -257,23 +257,28 @@ export default function Dashboard({ setActiveTab, profile }: { setActiveTab: (ta
            
            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { title: 'التقييمات', icon: Target, link: 'https://ellibrary.moe.gov.eg/cha/', color: 'text-rose-400', bg: 'bg-rose-500/10' },
-                { title: 'كتب ومناهج', icon: School, link: 'https://ellibrary.moe.gov.eg/books/', color: 'text-purple-400', bg: 'bg-purple-500/10' },
-                { title: 'فيديوهات شرح', icon: HelpCircle, link: 'https://ellibrary.moe.gov.eg/video/', color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
-                { title: 'مدرستنا +', icon: Sparkles, link: 'https://madrasetnaplus.eg/', color: 'text-amber-400', bg: 'bg-amber-500/10' },
+                { title: 'التقييمات الذكية', icon: Target, link: 'https://ellibrary.moe.gov.eg/cha/', color: 'text-rose-400', bg: 'bg-rose-500/10' },
+                { title: 'بنك الأسئلة', icon: School, link: 'https://ellibrary.moe.gov.eg/books/', color: 'text-purple-400', bg: 'bg-purple-500/10' },
+                { title: 'شرح الدروس', icon: PlayCircle, link: 'https://ellibrary.moe.gov.eg/video/', color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
+                { title: 'مدرستنا Plus', icon: Sparkles, link: 'https://madrasetnaplus.eg/', color: 'text-amber-400', bg: 'bg-amber-500/10' },
               ].map((res, i) => (
-                <a 
+                <motion.a 
                   key={i}
                   href={res.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-bg-panel border border-border-main p-6 rounded-[2rem] flex flex-col items-center justify-center text-center gap-4 hover:border-[#00D1FF] hover:translate-y-[-4px] transition-all group"
+                  whileHover={{ scale: 1.05, y: -5 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-bg-panel border border-border-main p-6 rounded-[2rem] flex flex-col items-center justify-center text-center gap-4 hover:border-[#00D1FF] hover:shadow-xl hover:shadow-cyan-500/10 transition-all group"
                 >
-                   <div className={`w-14 h-14 ${res.bg} rounded-2xl flex items-center justify-center ${res.color} group-hover:scale-110 transition-transform`}>
+                   <div className={`w-14 h-14 ${res.bg} rounded-2xl flex items-center justify-center ${res.color} group-hover:scale-110 transition-transform shadow-inner`}>
                       <res.icon size={28} />
                    </div>
-                   <span className="font-black text-sm text-text-main">{res.title}</span>
-                </a>
+                   <div className="space-y-1">
+                      <span className="font-black text-sm text-text-main block">{res.title}</span>
+                      <span className="text-[9px] text-text-sub font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">اضغط للزيارة</span>
+                   </div>
+                </motion.a>
               ))}
            </div>
         </section>
@@ -289,7 +294,7 @@ export default function Dashboard({ setActiveTab, profile }: { setActiveTab: (ta
               </h2>
            </div>
            <div className="bg-bg-panel border border-border-main rounded-[2.5rem] p-10 flex flex-col md:flex-row items-center gap-10 shadow-2xl overflow-hidden relative transition-colors">
-              <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 blur-[80px] rounded-full"></div>
+              <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 blur-[80px] rounded-full pointer-events-none"></div>
               <div className="flex-1 text-center md:text-right">
                  <h3 className="text-xl font-black text-white mb-4">نظام الامتحانات الذكي</h3>
                  <p className="text-text-sub font-medium mb-8 leading-relaxed max-w-md mx-auto md:mr-0">تمارين مخصصة لمرحلتك {profile.stage} تم إنشاؤها خصيصاً لك بمساعدة الذكاء الاصطناعي.</p>

@@ -30,14 +30,14 @@ const ACCENTS = {
 
 export default function NoteEditor() {
   const [notes, setNotes] = useState<Note[]>(() => {
-    const saved = localStorage.getItem('zakery_notes');
+    const saved = localStorage.getItem('zakirly_notes');
     return saved ? JSON.parse(saved) : [];
   });
   const [editingId, setEditingId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    localStorage.setItem('zakery_notes', JSON.stringify(notes));
+    localStorage.setItem('zakirly_notes', JSON.stringify(notes));
   }, [notes]);
 
   const addNote = () => {
@@ -71,7 +71,7 @@ export default function NoteEditor() {
   const activeNote = notes.find(n => n.id === editingId);
 
   return (
-    <div className="h-full flex flex-col gap-8 pb-10">
+    <div className="h-[calc(100vh-12rem)] flex flex-col gap-8 pb-10">
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center gap-5">
            <div className="p-4 bg-gray-900 border border-gray-800 text-[#00D1FF] rounded-2xl shadow-xl cyan-glow">
@@ -169,8 +169,13 @@ export default function NoteEditor() {
                    >
                      <Trash2 size={24} />
                    </button>
-                   <button onClick={() => setEditingId(null)} className="p-3 text-[#00D1FF] hover:bg-cyan-500/10 rounded-2xl transition-all lg:hidden">
+                   <button 
+                     onClick={() => setEditingId(null)} 
+                     className="p-3 text-[#00D1FF] hover:bg-cyan-500/10 rounded-2xl transition-all flex items-center gap-2"
+                     title="إنهاء التحرير"
+                   >
                      <Save size={24} />
+                     <span className="hidden md:inline font-bold text-xs uppercase tracking-widest">إغلاق</span>
                    </button>
                 </div>
               </div>

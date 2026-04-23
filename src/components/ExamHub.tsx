@@ -33,6 +33,20 @@ export default function ExamHub({ stage, language }: { stage: string, language: 
   const [showHint, setShowHint] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<number>(0);
+  const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+
+  const subjects = [
+    { id: 'arabic', label: 'اللغة العربية', icon: '📝' },
+    { id: 'english', label: 'اللغة الإنجليزية', icon: '🇬🇧' },
+    { id: 'math', label: 'الرياضيات / Math', icon: '🔢' },
+    { id: 'science', label: 'العلوم / Science', icon: '🧪' },
+    { id: 'social', label: 'الدراسات الاجتماعية', icon: '🌍' },
+    { id: 'history', label: 'التاريخ', icon: '🏛️' },
+    { id: 'geography', label: 'الجغرافيا', icon: '🗺️' },
+    { id: 'physics', label: 'الفيزياء / Physics', icon: '⚡' },
+    { id: 'chemistry', label: 'الكيمياء / Chemistry', icon: '⚗️' },
+    { id: 'biology', label: 'الأحياء / Biology', icon: '🧬' },
+  ];
 
   const saveResult = (finalScore: number, totalQuestions: number, timeTaken: number) => {
     const results = JSON.parse(localStorage.getItem('zakirly_exam_results') || '[]');
@@ -42,7 +56,8 @@ export default function ExamHub({ stage, language }: { stage: string, language: 
       total: totalQuestions,
       time: timeTaken,
       date: new Date().toISOString(),
-      stage: stage
+      stage: stage,
+      subject: subjects.find(s => s.id === selectedSubject)?.label || selectedSubject
     };
     localStorage.setItem('zakirly_exam_results', JSON.stringify([...results, newResult]));
     
@@ -54,6 +69,7 @@ export default function ExamHub({ stage, language }: { stage: string, language: 
   };
 
   const startExam = async () => {
+    if (!selectedSubject) return;
     setLoading(true);
     setCurrentIdx(0);
     setScore(0);
@@ -62,10 +78,12 @@ export default function ExamHub({ stage, language }: { stage: string, language: 
     setStartTime(Date.now());
 
     try {
+      const subjectLabel = subjects.find(s => s.id === selectedSubject)?.label;
       const prompt = `أريد اختباراً ذكياً وقوياً مكوناً من 5 أسئلة اختيار من متعدد للمرحلة الدراسية: ${stage}. 
+      المادة المطلوبة هي: ${subjectLabel}.
       نظام الدراسة هو: ${language === 'languages' ? 'اللغات (Math/Science)' : 'العربي (رياضيات/علوم)'}.
       يجب أن تكون الأسئلة باللغة ${language === 'languages' ? 'الإنجليزية لمواد الـ Math و Science والعربية لبقية المواد' : 'العربية لجميع المواد'}.
-      يجب أن تكون الأسئلة من صميم المناهج المصرية الحالية.
+      يجب أن تكون الأسئلة من صميم المناهج المصرية الحالية لهذه المادة بالتحديد.
       لكل سؤال قدم تلميحاً (Hint) يساعد الطالب.
       أريد النتيجة بتنسيق JSON حصرياً بالمواصفات التالية:
       [ { "question": "نص السؤال", "options": ["اختار 1", "اختار 2", "اختار 3", "اختار 4"], "correctAnswer": index_of_correct_option, "hint": "نص التلميح" } ]`;
@@ -258,22 +276,47 @@ export default function ExamHub({ stage, language }: { stage: string, language: 
       </div>
       <h1 className="text-4xl font-black text-white mb-6">جاهز لاختبار معلوماتك؟</h1>
       <p className="text-gray-400 font-medium max-w-md mb-10 leading-relaxed text-lg">
-        هنشوف مدى استيعابك للمنهج المصري الخاص بيك في <span className="text-cyan-400 font-black">{stage}</span>. أسئلة ذكية، تلميحات، وتقييم فوري!
+        اختار المادة اللي حابب تختبر نفسك فيها في مرحلة <span className="text-cyan-400 font-black">{stage}</span>. هنولدلك امتحان ذكي مخصص ليك!
       </p>
+
+      {/* Subject Selection Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-12 w-full max-w-4xl px-4">
+        {subjects.map((sub) => (
+          <button
+            key={sub.id}
+            onClick={() => setSelectedSubject(sub.id)}
+            className={`p-6 rounded-[2rem] border-2 transition-all flex flex-col items-center gap-3 group relative overflow-hidden ${
+              selectedSubject === sub.id 
+                ? 'bg-[#00D1FF]/10 border-[#00D1FF] shadow-[0_0_20px_rgba(0,209,255,0.2)]' 
+                : 'bg-bg-panel border-border-main hover:border-gray-700'
+            }`}
+          >
+            <span className="text-3xl group-hover:scale-110 transition-transform">{sub.icon}</span>
+            <span className={`text-[11px] font-black uppercase tracking-tight ${selectedSubject === sub.id ? 'text-white' : 'text-text-sub'}`}>
+              {sub.label}
+            </span>
+            {selectedSubject === sub.id && (
+              <motion.div layoutId="selection-ring" className="absolute inset-0 border-2 border-[#00D1FF] rounded-[2rem]"></motion.div>
+            )}
+          </button>
+        ))}
+      </div>
+
       <button 
         onClick={startExam}
-        className="bg-[#00D1FF] text-black px-12 py-5 rounded-2xl font-black text-xl shadow-xl shadow-cyan-500/20 hover:scale-105 transition-all flex items-center gap-4"
+        disabled={!selectedSubject}
+        className="bg-[#00D1FF] text-black px-12 py-5 rounded-2xl font-black text-xl shadow-xl shadow-cyan-500/20 hover:scale-105 transition-all flex items-center gap-4 disabled:opacity-20 disabled:grayscale disabled:scale-95"
       >
         <Sparkles size={24} />
-        توليد امتحان جديد
+        توليد امتحان {selectedSubject ? subjects.find(s => s.id === selectedSubject)?.label : ''}
       </button>
 
       {/* Stats History */}
-      <div className="mt-16 w-full max-w-2xl px-6">
+      <div className="mt-20 w-full max-w-2xl px-6">
         <h3 className="text-text-sub font-black text-[10px] uppercase tracking-[0.2em] mb-6 text-center">سجل الاختبارات السابقة</h3>
         <div className="space-y-3">
           {(() => {
-            const results = JSON.parse(localStorage.getItem('zakkerly_exam_results') || '[]');
+            const results = JSON.parse(localStorage.getItem('zakirly_exam_results') || '[]');
             if (results.length === 0) return <p className="text-text-sub font-medium opacity-40">لا توجد اختبارات مسجلة بعد</p>;
             return results.slice(-5).reverse().map((res: any, i: number) => (
               <div key={res.id} className="bg-bg-panel/40 border border-border-main p-4 rounded-2xl flex items-center justify-between transition-colors">
@@ -282,7 +325,7 @@ export default function ExamHub({ stage, language }: { stage: string, language: 
                     {res.score}/{res.total}
                   </div>
                   <div className="text-right">
-                    <p className="text-text-main font-bold text-sm">اختبار {res.stage}</p>
+                    <p className="text-text-main font-bold text-sm">اختبار {res.subject || res.stage}</p>
                     <p className="text-[10px] text-text-sub">{new Date(res.date).toLocaleDateString()} - {res.time}ث</p>
                   </div>
                 </div>
