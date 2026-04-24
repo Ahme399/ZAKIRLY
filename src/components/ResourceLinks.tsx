@@ -20,6 +20,22 @@ export default function ResourceLinks() {
       accent: 'bg-rose-500'
     },
     {
+      title: 'خالد صقر - كيمياء',
+      desc: 'منصة الأستاذ خالد صقر لشرح الكيمياء لكل المراحل الثانوية بأسلوب متطور.',
+      link: 'https://khaledsakr.com/',
+      icon: PlayCircle,
+      color: 'from-cyan-600/10 to-cyan-400/5',
+      accent: 'bg-cyan-500'
+    },
+    {
+      title: 'محمد عبدالمعبود - فيزياء',
+      desc: 'المنصة الرسمية للأستاذ محمد عبد المعبود لشرح الفيزياء ببراعة.',
+      link: 'https://abdelmaboud.online/',
+      icon: PlayCircle,
+      color: 'from-blue-600/10 to-blue-400/5',
+      accent: 'bg-blue-600'
+    },
+    {
       title: 'الكتب والمناهج',
       desc: 'تحميل جميع الكتب الدراسية والملحقات لكل الصفوف والمواد.',
       link: 'https://ellibrary.moe.gov.eg/books/',
